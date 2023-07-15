@@ -6,32 +6,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "animals")
+@Table(name = "images")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Animal {
+public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "age")
-    private Integer age;
+    @Column(name = "originalFileName")
+    private String originalFileName;
+    @Column(name = "size")
+    private Long size;
+    @Column(name = "contentType")
+    private String contentType;
+    @Lob
+    private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Owner owner;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "animal")
-    private List<Image> imageList = new ArrayList<>();
-
-    public void addImage(Image image){
-        image.setAnimal(this);
-        imageList.add(image);
-    }
+    private Animal animal;
 
 }
