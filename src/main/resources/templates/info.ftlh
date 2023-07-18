@@ -56,47 +56,17 @@
             text-decoration: underline;
         }
 
+
+
     </style>
 </head>
 <body>
 <h1>List of animals:</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Owner</th>
-        <th>Действия</th>
-    </tr>
-    </thead>
-    <tbody>
-    <#list animals as animal>
-    <tr>
-        <td>${animal.name}</td>
-        <td>${animal.age}</td>
-        <td>${animal.owner.name}</td>
-        <td><a href="/animal/${animal.id}">Подробно</a></td>
-
-    </tr>
-    </#list>
-    </tbody>
-</table>
-<h2>Add a new animal</h2>
-
-<form action="/animals/create" method="post" enctype="multipart/form-data">
-    <label>Name</label>
-    <input type="text" name="name">
-    <label>Age</label>
-    <input type="number" name="age">
-    <label>Owner</label>
-    <select name="ownerId">
-        <#list owners as owner>
-        <option value="${owner.id}">${owner.name}</option>
-    </#list>
-    </select>
-    <label>Image</label>
-    <input type="file" name="image">
-    <input type="submit" value="Add">
-</form>
+Name of animal <p>${animal.name}</p>
+Age <p>${animal.age}</p>
+Owner of animal<p>${animal.owner.name}</p>
+<#list images as image>
+<image scr="/image/${image.id}" height="150" width="150"></image>
+</#list>
 </body>

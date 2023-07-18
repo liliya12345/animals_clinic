@@ -8,4 +8,6 @@ import java.util.List;
 public interface AnimalsService {
     List<Animal> getAllAnimals();
     Animal addNewAnimal(Animal animal, MultipartFile image);
+
+    Animal getAnimalById (Integer animalId);
 }

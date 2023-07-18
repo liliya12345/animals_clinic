@@ -1,27 +1,33 @@
 package com.animals.clinic.animals.controllers;
 
 import com.animals.clinic.animals.models.Animal;
+import com.animals.clinic.animals.models.Image;
 import com.animals.clinic.animals.models.Owner;
+import com.animals.clinic.animals.repositories.ImageRepository;
 import com.animals.clinic.animals.services.impl.AnimalsServiceImpl;
 import com.animals.clinic.animals.services.impl.OwnerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 
 public class AnimalsController {
     private final AnimalsServiceImpl animalsService;
     private final OwnerServiceImpl ownersService;
+    private final ImageRepository imageRepository;
 
-    public AnimalsController(AnimalsServiceImpl animalsService, OwnerServiceImpl ownersService) {
+    public AnimalsController(AnimalsServiceImpl animalsService, OwnerServiceImpl ownersService, ImageRepository imageRepository) {
         this.animalsService = animalsService;
         this.ownersService = ownersService;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/")
@@ -33,11 +39,20 @@ public class AnimalsController {
         return "animals";
     }
 
+    @GetMapping("/animal/{animalId}")
+    public String getAllInformation(@PathVariable Integer animalId, Model model) {
+        List<Image> images = imageRepository.findAll().stream().filter(image1 -> image1.getAnimal().getId().equals(animalId)).collect(Collectors.toList());
+        Animal animalById = animalsService.getAnimalById(animalId);
+        model.addAttribute("animal", animalById);
+        model.addAttribute("images", images);
+        return "info";
+    }
+
     @PostMapping("/animals/create")
     public String addNewAnimal(@RequestParam MultipartFile image, @RequestParam Integer ownerId, Animal animal) {
         Owner ownerById = ownersService.getOwnerById(ownerId);
         animal.setOwner(ownerById);
-        animalsService.addNewAnimal(animal,image);
+        animalsService.addNewAnimal(animal, image);
 
         System.out.println();
         return "redirect:/";

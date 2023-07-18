@@ -2,6 +2,7 @@ package com.animals.clinic.animals.services.impl;
 
 import com.animals.clinic.animals.models.Animal;
 import com.animals.clinic.animals.models.Image;
+import com.animals.clinic.animals.models.Owner;
 import com.animals.clinic.animals.repositories.AnimalsRepository;
 import com.animals.clinic.animals.services.AnimalsService;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 
@@ -27,11 +29,19 @@ public class AnimalsServiceImpl implements AnimalsService {
 
     @Override
     public Animal addNewAnimal(Animal animal, MultipartFile file) {
-        List<Image> imageList = animal.getImageList();
+        //List<Image> imageList = animal.getImageList();
         Image image = convertMultipartFileToimage(file);
-        imageList.add(image);
-        animal.setImageList(imageList);
+       // image.setAnimal(animal);
+        animal.addImage(image);
+//        imageList.add(image);
+//        animal.setImageList(imageList);
         return animalsRepository.save(animal);
+    }
+
+    @Override
+    public Animal getAnimalById(Integer animalId) {
+        Optional<Animal> animalById = animalsRepository.findById(animalId);
+        return animalById.orElseThrow(RuntimeException::new);
     }
 
     private Image convertMultipartFileToimage(MultipartFile file) {
