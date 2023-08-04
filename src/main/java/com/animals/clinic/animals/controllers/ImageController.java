@@ -21,8 +21,8 @@ public class ImageController {
         this.imageRepository = imageRepository;
     }
     @GetMapping("/image/{imageId}")
-    public ResponseEntity<?> getImage(@PathVariable Integer id){
-        Optional<Image> imageById = imageRepository.findById(id);
+    public ResponseEntity<?> getImage(@PathVariable Integer imageId){
+        Optional<Image> imageById = imageRepository.findById(imageId);
         Image image = imageById.orElse(null);
         if(image==null){
             return ResponseEntity.notFound().build();

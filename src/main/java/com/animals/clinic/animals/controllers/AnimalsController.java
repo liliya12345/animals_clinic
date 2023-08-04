@@ -1,7 +1,6 @@
 package com.animals.clinic.animals.controllers;
 
 import com.animals.clinic.animals.models.Animal;
-import com.animals.clinic.animals.models.Image;
 import com.animals.clinic.animals.models.Owner;
 import com.animals.clinic.animals.repositories.ImageRepository;
 import com.animals.clinic.animals.services.impl.AnimalsServiceImpl;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 
@@ -41,10 +39,9 @@ public class AnimalsController {
 
     @GetMapping("/animal/{animalId}")
     public String getAllInformation(@PathVariable Integer animalId, Model model) {
-        List<Image> images = imageRepository.findAll().stream().filter(image1 -> image1.getAnimal().getId().equals(animalId)).collect(Collectors.toList());
         Animal animalById = animalsService.getAnimalById(animalId);
         model.addAttribute("animal", animalById);
-        model.addAttribute("images", images);
+        model.addAttribute("images", animalById.getImageList());
         return "info";
     }
 
@@ -53,7 +50,6 @@ public class AnimalsController {
         Owner ownerById = ownersService.getOwnerById(ownerId);
         animal.setOwner(ownerById);
         animalsService.addNewAnimal(animal, image);
-
         System.out.println();
         return "redirect:/";
     }

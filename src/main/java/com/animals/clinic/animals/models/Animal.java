@@ -1,11 +1,12 @@
 package com.animals.clinic.animals.models;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +29,10 @@ public class Animal {
     private Owner owner;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "animal")
     private List<Image> imageList = new ArrayList<>();
+    @OneToMany(mappedBy = "animal")
+    private List<AnimalsVaccination> animalsVaccinations = new ArrayList<>();
 
-    public void addImage(Image image){
+    public void addImage(Image image) {
         image.setAnimal(this);
         imageList.add(image);
     }

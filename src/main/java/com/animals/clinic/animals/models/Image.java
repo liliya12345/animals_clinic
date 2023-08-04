@@ -1,10 +1,12 @@
 package com.animals.clinic.animals.models;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "images")
@@ -26,6 +28,7 @@ public class Image {
     @Column(name = "contentType")
     private String contentType;
     @Lob
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] bytes;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Animal animal;

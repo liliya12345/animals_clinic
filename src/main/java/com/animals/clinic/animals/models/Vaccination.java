@@ -10,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "owner")
+@Table(name = "vaccination")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Owner{
+public class Vaccination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-    private List<Animal> animals = new ArrayList<>();
+    @OneToMany(mappedBy = "vaccination")
+    private List<AnimalsVaccination> animalsVaccinations =new ArrayList<>();
 }

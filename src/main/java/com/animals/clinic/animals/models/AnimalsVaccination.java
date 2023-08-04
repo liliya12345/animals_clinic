@@ -6,22 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "owner")
+@Table(name="animals_vaccination")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Owner{
+public class AnimalsVaccination {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "name")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "owner")
-    private List<Animal> animals = new ArrayList<>();
+    @Column(name = "date")
+    private LocalDate date;
+    @ManyToOne
+    private Animal animal;
+    @ManyToOne
+    private Vaccination vaccination;
 }

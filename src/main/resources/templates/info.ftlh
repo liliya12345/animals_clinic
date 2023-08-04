@@ -63,10 +63,11 @@
 <body>
 <h1>List of animals:</h1>
 
-Name of animal <p>${animal.name}</p>
-Age <p>${animal.age}</p>
-Owner of animal<p>${animal.owner.name}</p>
-<#list images as image>
-<image scr="/image/${image.id}" height="150" width="150"></image>
+Name of animal <b>${animal.name}</b>
+<br>
+Age  <b>${animal.age}</b><br>
+Owner of animal <b>${animal.owner.name}</b><br>
+<#list images as image><img src="/image/${image.id}" height="250" width="200"></img>
 </#list>
 </body>
+</html>
